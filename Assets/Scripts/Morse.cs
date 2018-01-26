@@ -22,32 +22,32 @@ public class Morse : MonoBehaviour
     {
         morseCodeDictionary = new Dictionary<string, char>()
         {
-            {".-", 'a'},
-            {"-...", 'b'},
-            {"-.-.", 'c'},
-            {"-..", 'd'},
-            {".", 'e'},
-            {"..-.", 'f'},
-            {"--.", 'g'},
-            {"....", 'h'},
-            {"..", 'i'},
-            {".---", 'j'},
-            {"-.-" , 'k'},
-            {".-..", 'l'},
-            {"--" , 'm'},
-            {"-.", 'n'},
-            {"---", 'o'},
-            {".--.", 'p'},
-            {"--.-", 'q'},
-            {".-." , 'r'},
-            {"...", 's'},
-            {"-", 't'},
-            {"..-", 'u'},
-            {"...-", 'v'},
-            {".--", 'w'},
-            {"-..-", 'x'},
-            {"-.--", 'y'},
-            {"--..", 'z'},
+            {".-", 'A'},
+            {"-...", 'B'},
+            {"-.-.", 'C'},
+            {"-..", 'D'},
+            {".", 'E'},
+            {"..-.", 'F'},
+            {"--.", 'G'},
+            {"....", 'H'},
+            {"..", 'I'},
+            {".---", 'J'},
+            {"-.-" , 'K'},
+            {".-..", 'L'},
+            {"--" , 'M'},
+            {"-.", 'N'},
+            {"---", 'O'},
+            {".--.", 'P'},
+            {"--.-", 'Q'},
+            {".-." , 'R'},
+            {"...", 'S'},
+            {"-", 'T'},
+            {"..-", 'U'},
+            {"...-", 'V'},
+            {".--", 'W'},
+            {"-..-", 'X'},
+            {"-.--", 'Y'},
+            {"--..", 'Z'},
             {".----", '1'},
             {"..---", '2'},
             {"...--", '3'},
@@ -61,8 +61,19 @@ public class Morse : MonoBehaviour
         };
     }
 
-    void MorseCodeDecoder()
+    public string MorseCodeDecoder(string input)
     {
+        System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+        if (morseCodeDictionary.ContainsKey(input))
+        {
+            stringBuilder.Append(morseCodeDictionary[input]);
+        }
 
+        else
+        {
+            string errorString = "Error! Try Again!";
+            return errorString;
+        }
+        return stringBuilder.ToString();
     }
 }
