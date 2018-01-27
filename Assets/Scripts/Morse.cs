@@ -61,13 +61,15 @@ public class Morse : MonoBehaviour
         };
     }
 
-    public string MorseCodeDecoder(string input)
+    public static string MorseCodeDecoder(string input)
     {
         System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
         if (morseCodeDictionary.ContainsKey(input))
         {
             stringBuilder.Append(morseCodeDictionary[input]);
         }
+        else if (morseCodeDictionary[input] == ' ')
+            stringBuilder.Append(morseCodeDictionary[input]);
 
         else
         {
