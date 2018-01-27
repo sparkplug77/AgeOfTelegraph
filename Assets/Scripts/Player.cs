@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     Transform morseCanvas;
     Text morseText;
     public Text messagesText;
+    public Text gamePlayText;
     public Text textTimer;
 
     public AudioClip dashAudio;
@@ -26,9 +27,16 @@ public class Player : MonoBehaviour
     bool isHypen;
     bool isComplete;
     bool displayCheatSheet;
+    bool startGame;
 
     float timer;
 
+    string message;
+
+    void Awake()
+    {
+        message = "Type in 'EMERGENCY SOS' using the morse code. Feel free to use the cheat sheet to check the morse code for all the alphabets." + "\r\n" + "Press 'Enter' to start";
+    }
 
 	// Use this for initialization
 	void Start ()
@@ -37,6 +45,7 @@ public class Player : MonoBehaviour
         isHypen = false;
         isComplete = false;
         displayCheatSheet = false;
+        startGame = false;
         morse = GameObject.FindGameObjectWithTag("MorseCanvas");
         morseCanvas = morse.transform.Find("Canvas");
         morseText = morseCanvas.transform.Find("Panel").transform.Find("MorseText").GetComponent<Text>();
@@ -51,6 +60,8 @@ public class Player : MonoBehaviour
         cheatSheetButton = morseCanvas.transform.Find("MCCheatSheet_Button").GetComponent<Button>();
 
 
+        gamePlayText.text = message;
+
 	}
     void OnGUI()
     {
@@ -60,7 +71,10 @@ public class Player : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        if (morsePanel.gameObject.activeInHierarchy)
+        if (Input.GetKey(KeyCode.Return))
+            startGame = true;
+
+        if (morsePanel.gameObject.activeInHierarchy && startGame)
         {
             timer += Time.deltaTime;
             textTimer.text = timer.ToString("f0");
@@ -72,12 +86,12 @@ public class Player : MonoBehaviour
                 isComplete = false;
                 morseText.text = "";
             }
-            if (!displayCheatSheet)
-                cheatSheetButton.onClick.AddListener(DisplayCheatSheet);
-            else
-                cheatSheetButton.onClick.AddListener(DisplayMorsePanel);
 
         }
+        if (!displayCheatSheet)
+            cheatSheetButton.onClick.AddListener(DisplayCheatSheet);
+        else
+            cheatSheetButton.onClick.AddListener(DisplayMorsePanel);
     }
 
     public void Tap()
