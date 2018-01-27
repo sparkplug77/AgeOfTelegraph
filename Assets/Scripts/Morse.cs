@@ -1,16 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Morse : MonoBehaviour
 {
     static Dictionary<string, char> morseCodeDictionary;
-
+    public Text cheatSheet;
 	// Use this for initialization
 	void Start ()
     {
         InitializeMCDictionary();
-	}
+
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -58,6 +60,7 @@ public class Morse : MonoBehaviour
             {"---..", '8'},
             {"----.", '9'},
             {"-----", '0'},
+            {".......", ' '}
         };
     }
 
@@ -68,8 +71,6 @@ public class Morse : MonoBehaviour
         {
             stringBuilder.Append(morseCodeDictionary[input]);
         }
-        else if (morseCodeDictionary[input] == ' ')
-            stringBuilder.Append(morseCodeDictionary[input]);
 
         else
         {
@@ -77,5 +78,13 @@ public class Morse : MonoBehaviour
             return errorString;
         }
         return stringBuilder.ToString();
+    }
+
+    public void DisplayDictionary()
+    {
+        foreach (KeyValuePair<string, char> kvp in morseCodeDictionary)
+        {
+            cheatSheet.text += "Code = " + kvp.Key + "  Alphabets = " + kvp.Value + System.Environment.NewLine;
+        }
     }
 }

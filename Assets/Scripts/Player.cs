@@ -5,10 +5,20 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    //public Morse morseCode;
-    public Text morseText;
+    GameObject morse;
+    Canvas morseCanvas;
+    Text morseText;
     public Text messagesText;
     public Text textTimer;
+
+    public AudioClip dashAudio;
+    public AudioClip dotAudio;
+    public AudioClip errorAudio;
+
+    AudioSource audioSource;
+
+    Transform morsePanel;
+    Transform cheatSheetPanel;
 
 
     bool isDot;
@@ -24,12 +34,21 @@ public class Player : MonoBehaviour
         isDot = false;
         isHypen = false;
         isComplete = false;
-        
+        morse = GameObject.FindGameObjectWithTag("MorseCanvas");
+        morseCanvas = morse.GetComponentInChildren<Canvas>();
+        morseText = morseCanvas.transform.Find("Panel").transform.Find("MorseText").GetComponent<Text>();
+        audioSource = morse.GetComponent<AudioSource>();
+
+        morsePanel = morseCanvas.transform.Find("Panel");
+        morsePanel.gameObject.SetActive(true);
+
+        cheatSheetPanel = morseCanvas.transform.Find("MCCheatSheet_Panel");
+        cheatSheetPanel.gameObject.SetActive(false);
 
 	}
     void OnGUI()
     {
-        morseText.text = GUI.TextField(new Rect(0, 0, 0, 0), morseText.text, 5);
+        morseText.text = GUI.TextField(new Rect(0, 0, 0, 0), morseText.text, 7);
     }
 	
 	// Update is called once per frame
@@ -49,22 +68,26 @@ public class Player : MonoBehaviour
 
     public void Tap()
     {
-        if (timer < 1.0f && !isDot)
+        if (timer < 2.0f && !isDot)
         {
             isDot = true;
+            audioSource.clip = dotAudio;
             morseText.text += ".";
         }
         if (timer > 2.0f && timer < 3.0f && !isHypen)
         {
             isHypen = true;
+            audioSource.clip = dashAudio;
             morseText.text += "-";
         }
 
-        if (morseText.text.Length > 5)
+        if (morseText.text.Length > 7)
         {
             // error audio
+            audioSource.clip = errorAudio;
             morseText.text = "";
         }
+        audioSource.Play();
         timer = 0;
         isDot = false;
         isHypen = false;
