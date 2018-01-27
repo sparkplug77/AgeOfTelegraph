@@ -6,12 +6,13 @@ using UnityEngine.UI;
 public class Morse : MonoBehaviour
 {
     static Dictionary<string, char> morseCodeDictionary;
+    [HideInInspector]
     public Text cheatSheet;
 	// Use this for initialization
 	void Start ()
     {
         InitializeMCDictionary();
-
+        DisplayDictionary();
     }
 	
 	// Update is called once per frame
@@ -82,6 +83,7 @@ public class Morse : MonoBehaviour
 
     public void DisplayDictionary()
     {
+        System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
         foreach (KeyValuePair<string, char> kvp in morseCodeDictionary)
         {
             cheatSheet.text += "Code = " + kvp.Key + "  Alphabets = " + kvp.Value + System.Environment.NewLine;

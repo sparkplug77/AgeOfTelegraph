@@ -60,20 +60,24 @@ public class Player : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        timer += Time.deltaTime;
-        textTimer.text = timer.ToString("f0");
-        if ((int)timer == 5/* && timer < 7.0f*/)
+        if (morsePanel.gameObject.activeInHierarchy)
         {
-            isComplete = true;
-            messagesText.text += Morse.MorseCodeDecoder(morseText.text);
-            timer = 0;
-            isComplete = false;
-            morseText.text = "";
+            timer += Time.deltaTime;
+            textTimer.text = timer.ToString("f0");
+            if ((int)timer == 5/* && timer < 7.0f*/)
+            {
+                isComplete = true;
+                messagesText.text += Morse.MorseCodeDecoder(morseText.text);
+                timer = 0;
+                isComplete = false;
+                morseText.text = "";
+            }
+            if (!displayCheatSheet)
+                cheatSheetButton.onClick.AddListener(DisplayCheatSheet);
+            else
+                cheatSheetButton.onClick.AddListener(DisplayMorsePanel);
+
         }
-        if (!displayCheatSheet)
-            cheatSheetButton.onClick.AddListener(DisplayCheatSheet);
-        else
-            cheatSheetButton.onClick.AddListener(DisplayMorsePanel);
     }
 
     public void Tap()
@@ -108,6 +112,7 @@ public class Player : MonoBehaviour
         morsePanel.gameObject.SetActive(false);
         cheatSheetPanel.gameObject.SetActive(true);
         cheatSheetButton.GetComponentInChildren<Text>().text = "Back";
+        //morseCode.DisplayDictionary();
         displayCheatSheet = true;
     }
 
