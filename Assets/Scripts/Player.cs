@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     GameObject morse;
-    Canvas morseCanvas;
+    Transform morseCanvas;
     Text morseText;
     public Text messagesText;
     public Text textTimer;
@@ -19,11 +19,13 @@ public class Player : MonoBehaviour
 
     Transform morsePanel;
     Transform cheatSheetPanel;
+    Button cheatSheetButton;
 
 
     bool isDot;
     bool isHypen;
     bool isComplete;
+    bool displayCheatSheet;
 
     float timer;
 
@@ -34,8 +36,9 @@ public class Player : MonoBehaviour
         isDot = false;
         isHypen = false;
         isComplete = false;
+        displayCheatSheet = false;
         morse = GameObject.FindGameObjectWithTag("MorseCanvas");
-        morseCanvas = morse.GetComponentInChildren<Canvas>();
+        morseCanvas = morse.transform.Find("Canvas");
         morseText = morseCanvas.transform.Find("Panel").transform.Find("MorseText").GetComponent<Text>();
         audioSource = morse.GetComponent<AudioSource>();
 
@@ -44,6 +47,9 @@ public class Player : MonoBehaviour
 
         cheatSheetPanel = morseCanvas.transform.Find("MCCheatSheet_Panel");
         cheatSheetPanel.gameObject.SetActive(false);
+
+        cheatSheetButton = morseCanvas.transform.Find("MCCheatSheet_Button").GetComponent<Button>();
+
 
 	}
     void OnGUI()
@@ -64,6 +70,10 @@ public class Player : MonoBehaviour
             isComplete = false;
             morseText.text = "";
         }
+        if (!displayCheatSheet)
+            cheatSheetButton.onClick.AddListener(DisplayCheatSheet);
+        else
+            cheatSheetButton.onClick.AddListener(DisplayMorsePanel);
     }
 
     public void Tap()
@@ -91,5 +101,21 @@ public class Player : MonoBehaviour
         timer = 0;
         isDot = false;
         isHypen = false;
+    }
+
+    void DisplayCheatSheet()
+    {
+        morsePanel.gameObject.SetActive(false);
+        cheatSheetPanel.gameObject.SetActive(true);
+        cheatSheetButton.GetComponentInChildren<Text>().text = "Back";
+        displayCheatSheet = true;
+    }
+
+    void DisplayMorsePanel()
+    {
+        morsePanel.gameObject.SetActive(true);
+        cheatSheetPanel.gameObject.SetActive(false);
+        cheatSheetButton.GetComponentInChildren<Text>().text = "MC Cheat Sheet";
+        displayCheatSheet = false;
     }
 }
