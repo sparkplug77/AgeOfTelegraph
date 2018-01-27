@@ -92,6 +92,15 @@ public class Player : MonoBehaviour
             cheatSheetButton.onClick.AddListener(DisplayCheatSheet);
         else
             cheatSheetButton.onClick.AddListener(DisplayMorsePanel);
+
+        if (messagesText.text == "EMERGENCY SOS")
+        {
+            // quit screen
+        }
+        else if (messagesText.text.Length > 13)
+        {
+            // quit screen
+        }
     }
 
     public void Tap()

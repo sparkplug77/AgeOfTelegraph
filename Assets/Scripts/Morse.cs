@@ -8,11 +8,14 @@ public class Morse : MonoBehaviour
     static Dictionary<string, char> morseCodeDictionary;
     [HideInInspector]
     public Text cheatSheet;
+
+    static string errorString;
 	// Use this for initialization
 	void Start ()
     {
         InitializeMCDictionary();
         DisplayDictionary();
+        errorString = "Error! Try Again!";
     }
 	
 	// Update is called once per frame
@@ -75,8 +78,7 @@ public class Morse : MonoBehaviour
 
         else
         {
-            string errorString = "Error! Try Again!";
-            return errorString;
+            stringBuilder.Append("");
         }
         return stringBuilder.ToString();
     }
