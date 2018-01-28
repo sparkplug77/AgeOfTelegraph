@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour
@@ -58,7 +59,7 @@ public class Player : MonoBehaviour
         cheatSheetPanel.gameObject.SetActive(false);
 
         cheatSheetButton = morseCanvas.transform.Find("MCCheatSheet_Button").GetComponent<Button>();
-
+        morseCanvas.gameObject.SetActive(false);
 
         gamePlayText.text = message;
 
@@ -96,10 +97,12 @@ public class Player : MonoBehaviour
         if (messagesText.text == "EMERGENCY SOS")
         {
             // quit screen
+            SceneManager.LoadScene(1);
         }
         else if (messagesText.text.Length > 13)
         {
             // quit screen
+            SceneManager.LoadScene(2);
         }
     }
 
